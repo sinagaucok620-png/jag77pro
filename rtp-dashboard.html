@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RTP Live Gacor - JAGUAR77</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        /* --- TEMA JAGUAR LUXURY --- */
+        :root {
+            --gold: #FFD700; 
+            --gold-glow: #FF8C00;
+            --glass-bg: rgba(15, 10, 5, 0.92); 
+            --glass-border: rgba(255, 215, 0, 0.25);
+            --neon-green: #00ff88;
+            --neon-red: #ff3333;
+            --neon-yellow: #ffee00;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: #050200; font-family: 'Poppins', sans-serif; color: white; min-height: 100vh; }
+
+        /* Video Background */
+        .video-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
+        .video-bg { width: 100%; height: 100%; object-fit: cover; }
+        .video-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at center, rgba(30, 15, 0, 0.6) 0%, rgba(0, 0, 0, 0.95) 100%);
+        }
+
+        /* --- HEADER --- */
+        .header-bar {
+            padding: 15px 20px;
+            background: rgba(10, 5, 0, 0.95);
+            border-bottom: 1px solid var(--glass-border);
+            position: sticky; top: 0; z-index: 100;
+            display: flex; justify-content: space-between; align-items: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.8);
+        }
+        .btn-back { color: var(--gold); text-decoration: none; font-weight: bold; font-size: 0.9rem; display: flex; align-items: center; gap: 8px; }
+        .brand-logo img { height: 40px; filter: drop-shadow(0 0 5px var(--gold-glow)); }
+
+        /* --- PROVIDER MENU --- */
+        .provider-scroll {
+            display: flex; gap: 10px; overflow-x: auto; padding: 20px;
+            background: rgba(0,0,0,0.3);
+            scrollbar-width: none; 
+        }
+        /* --- PROVIDER MENU (REVISI EXCLUSIVE) --- */
+        .provider-scroll {
+            display: flex;
+            gap: 15px; /* Jarak antar tombol */
+            overflow-x: auto;
+            padding: 25px 20px; /* Padding diperbesar agar bayangan tidak terpotong */
+            background: rgba(0,0,0,0.2); /* Latar belakang jalur transparan */
+            scrollbar-width: none; /* Sembunyikan scrollbar Firefox */
+            mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent); /* Efek memudar di kiri kanan */
+            -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+        }
+        .provider-scroll::-webkit-scrollbar { display: none; } /* Sembunyikan scrollbar Chrome */
+
+        /* TOMBOL PROVIDER (STATE MATI/INACTIVE) */
+        .prov-btn {
+            position: relative;
+            background: rgba(255, 255, 255, 0.03); /* Glass Dark */
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 12px 30px; /* Lebih lebar agar lega */
+            border-radius: 50px; /* Pill Shape */
+            color: #888;
+            white-space: nowrap;
+            cursor: pointer;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); /* Transisi halus (kenyal) */
+            overflow: hidden; /* Untuk efek kilat */
+            z-index: 1;
+        }
+
+        /* EFEK HOVER (SAAT MOUSE LEWAT) */
+        .prov-btn:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+            background: rgba(255, 215, 0, 0.1);
+            transform: translateY(-3px); /* Naik sedikit */
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+        }
+
+        /* TOMBOL AKTIF (STATE MENYALA) - EXCLUSIVE GOLD */
+        .prov-btn.active {
+            background: linear-gradient(135deg, #FFD700 0%, #FF8C00 100%); /* Gradasi Emas Mewah */
+            border-color: transparent;
+            color: #000; /* Teks Hitam agar kontras */
+            font-weight: 900;
+            transform: scale(1.05); /* Membesar sedikit */
+            box-shadow: 0 0 25px rgba(255, 140, 0, 0.6); /* Glow Oranye Kuat */
+        }
+
+        /* ANIMASI KILATAN CAHAYA PADA TOMBOL AKTIF */
+        .prov-btn.active::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 50%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent);
+            transform: skewX(-20deg); /* Miringkan cahaya */
+            animation: btnShine 3s infinite; /* Gerak terus menerus */
+        }
+
+        /* ANIMASI KILAT */
+        @keyframes btnShine {
+            0% { left: -100%; }
+            20% { left: 200%; } /* Lewat cepat */
+            100% { left: 200%; } /* Jeda lama */
+        }
+        .prov-btn.active, .prov-btn:hover {
+            background: var(--gold); color: black; border-color: var(--gold);
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+            font-weight: bold;
+        }
+
+        /* --- SEARCH --- */
+        .search-container { padding: 0 20px 20px 20px; max-width: 600px; margin: 0 auto; }
+        .search-box {
+            width: 100%; padding: 12px 20px 12px 45px;
+            border-radius: 10px; border: 1px solid var(--glass-border);
+            background: rgba(0,0,0,0.6); color: white;
+        }
+        .search-wrapper { position: relative; }
+        .search-icon { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--gold); }
+
+        /* --- GRID --- */
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); /* Ukuran kartu pas di HP */
+            gap: 15px; padding: 0 20px 80px 20px;
+            max-width: 1200px; margin: 0 auto;
+        }
+
+        /* GAME CARD */
+        .game-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 15px; overflow: hidden;
+            position: relative; transition: 0.3s;
+        }
+        .game-card:hover {
+            transform: translateY(-5px); border-color: var(--gold);
+            box-shadow: 0 0 20px rgba(255, 140, 0, 0.3);
+        }
+
+        .card-img-wrap {
+            position: relative; width: 100%; height: 130px; /* Tinggi gambar disesuaikan */
+            background: #111; overflow: hidden;
+        }
+        .game-img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .game-card:hover .game-img { transform: scale(1.1); }
+        
+        .hot-badge {
+            position: absolute; top: 5px; right: 5px;
+            background: linear-gradient(45deg, #ff0000, #ff5500);
+            color: white; font-size: 0.6rem; padding: 2px 6px;
+            border-radius: 4px; font-weight: bold;
+            box-shadow: 0 0 10px red; animation: pulse 1s infinite;
+        }
+
+        .card-body { padding: 10px; text-align: center; }
+        .game-name { font-size: 0.8rem; margin-bottom: 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #ddd; }
+
+        /* RTP BAR */
+        .rtp-stat { display: flex; justify-content: space-between; font-size: 0.7rem; margin-bottom: 5px; color: #ccc; }
+        .rtp-val { font-weight: bold; font-family: 'Orbitron'; }
+        
+        .progress-track { width: 100%; height: 6px; background: #333; border-radius: 4px; overflow: hidden; margin-bottom: 10px; }
+        .progress-fill { height: 100%; width: 0%; border-radius: 4px; transition: width 1.5s ease-in-out; position: relative; }
+        
+        .progress-fill::after {
+            content:''; position: absolute; top:0; left:0; bottom:0; width: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent);
+            transform: translateX(-100%); animation: shimmer 2s infinite;
+        }
+
+        /* Warna Status */
+        .stat-high { color: var(--neon-green); }
+        .bg-high { background: linear-gradient(90deg, #00b09b, var(--neon-green)); box-shadow: 0 0 5px var(--neon-green); }
+        
+        .stat-med { color: var(--neon-yellow); }
+        .bg-med { background: linear-gradient(90deg, #ff9900, var(--neon-yellow)); }
+        
+        .stat-low { color: var(--neon-red); }
+        .bg-low { background: linear-gradient(90deg, #800000, var(--neon-red)); }
+
+        .btn-pola {
+            display: block; width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--gold); padding: 8px; border-radius: 8px;
+            font-size: 0.75rem; font-weight: bold; cursor: pointer; transition: 0.3s;
+        }
+        .btn-pola:hover { background: var(--gold); color: black; box-shadow: 0 0 15px var(--gold); }
+
+        /* MODAL POPUP */
+        .modal {
+            display: none; position: fixed; z-index: 999; left: 0; top: 0; width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.8); backdrop-filter: blur(8px);
+            align-items: center; justify-content: center;
+        }
+        .modal-content {
+            background: linear-gradient(145deg, #151515, #000);
+            border: 1px solid var(--gold);
+            width: 90%; max-width: 380px;
+            padding: 25px; border-radius: 15px; text-align: center;
+            position: relative; box-shadow: 0 0 50px rgba(255, 140, 0, 0.4);
+            animation: popUp 0.3s ease-out;
+        }
+        .close-modal { position: absolute; top: 15px; right: 20px; color: #fff; font-size: 1.5rem; cursor: pointer; }
+        
+        .pola-box { background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; margin: 20px 0; text-align: left; }
+        .pola-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; font-size: 0.9rem; color: #ddd; }
+        .pola-icon { color: var(--neon-green); width: 20px; text-align: center; }
+
+        @keyframes shimmer { 100% { transform: translateX(100%); } }
+        @keyframes popUp { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+    </style>
+</head>
+<body>
+
+    <div class="video-container">
+        <video autoplay muted loop playsinline class="video-bg">
+            <source src="assets/images/bg-jaguar.mp4" type="video/mp4">
+        </video>
+        <div class="video-overlay"></div>
+    </div>
+
+    <div class="header-bar">
+        <a href="index.html" class="btn-back"><i class="fas fa-chevron-left"></i> HOME</a>
+        <div class="brand-logo">
+            <img src="assets/images/logo-jaguar.png" alt="JAGUAR77">
+        </div>
+    </div>
+
+<div class="provider-scroll">
+        <button class="prov-btn active" onclick="filterProvider('all', this)">
+            <i class="fas fa-th-large"></i> ALL GAMES
+        </button>
+        <button class="prov-btn" onclick="filterProvider('Pragmatic Play', this)">
+            <i class="fas fa-crown"></i> PRAGMATIC
+        </button>
+        <button class="prov-btn" onclick="filterProvider('PG Soft', this)">
+            <i class="fas fa-gem"></i> PG SOFT
+        </button>
+        <button class="prov-btn" onclick="filterProvider('Habanero', this)">
+            <i class="fas fa-fire"></i> HABANERO
+        </button>
+        <button class="prov-btn" onclick="filterProvider('Microgaming', this)">
+            <i class="fas fa-coins"></i> MICROGAMING
+        </button>
+        <button class="prov-btn" onclick="filterProvider('Spadegaming', this)">
+            <i class="fas fa-shield-alt"></i> SPADEGAMING
+        </button>
+        <button class="prov-btn" onclick="filterProvider('Joker Gaming', this)">
+            <i class="fas fa-mask"></i> JOKER123
+        </button>
+        <button class="prov-btn" onclick="filterProvider('NoLimit City', this)">
+            <i class="fas fa-skull"></i> NOLIMIT
+        </button>
+        <button class="prov-btn" onclick="filterProvider('CQ9', this)">
+            <i class="fas fa-dragon"></i> CQ9
+        </button>
+    </div>
+    
+    <div class="search-container">
+        <div class="search-wrapper">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" id="searchInput" class="search-box" placeholder="Cari game (Contoh: Zeus, Mahjong)...">
+        </div>
+    </div>
+
+    <div id="gameGrid" class="game-grid"></div>
+
+    <div id="polaModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="tutupModal()">&times;</span>
+            <h3 id="modalTitle" style="color:var(--gold); font-family:'Orbitron';">GAME TITLE</h3>
+            <p style="color:#aaa; font-size:0.8rem;">Pola Gacor Update: <span id="jamUpdate">Now</span></p>
+            
+            <div class="pola-box">
+                <div class="pola-row"><i class="fas fa-bolt pola-icon"></i> <span>Turbo Spin <b>10x</b> (DC OFF)</span></div>
+                <div class="pola-row"><i class="fas fa-bolt pola-icon"></i> <span>Turbo Spin <b>20x</b> (DC ON)</span></div>
+                <div class="pola-row"><i class="fas fa-hand-pointer pola-icon"></i> <span>Manual Spin <b>7x</b></span></div>
+                <div class="pola-row"><i class="fas fa-check-circle" style="color:var(--gold)"></i> <span>Jam Gacor: <b>01:00 - 04:00</b></span></div>
+            </div>
+
+            <button style="width:100%; padding:15px; background:linear-gradient(90deg, #FF8C00, #FFD700); border:none; border-radius:50px; font-weight:bold; cursor:pointer; color:black;">
+                MAIN SEKARANG
+            </button>
+        </div>
+    </div>
+
+    <script src="assets/js/rtp-data.js"></script>
+    <script>
+        const grid = document.getElementById('gameGrid');
+        const modal = document.getElementById('polaModal');
+        const searchInput = document.getElementById('searchInput');
+
+        // Fungsi Render
+        function renderGames(data) {
+            grid.innerHTML = '';
+            data.forEach(game => {
+                let colorClass = 'bg-low';
+                let textClass = 'stat-low';
+                if(game.rtp >= 90) { colorClass = 'bg-high'; textClass = 'stat-high'; }
+                else if(game.rtp >= 70) { colorClass = 'bg-med'; textClass = 'stat-med'; }
+
+                // Ambil gambar dari folder assets/images/
+                const imgPath = `assets/images/${game.img}`;
+
+                const card = `
+                    <div class="game-card">
+                        <div class="card-img-wrap">
+                            ${game.rtp >= 90 ? '<span class="hot-badge">GACOR</span>' : ''}
+                            <img src="${imgPath}" alt="${game.nama}" class="game-img" onerror="this.src='https://via.placeholder.com/150?text=GAME'">
+                        </div>
+                        <div class="card-body">
+                            <div class="game-name">${game.nama}</div>
+                            <div class="rtp-stat">
+                                <span>RTP Live</span>
+                                <span class="rtp-val ${textClass}">${game.rtp}%</span>
+                            </div>
+                            <div class="progress-track">
+                                <div class="progress-fill ${colorClass}" style="width: ${game.rtp}%"></div>
+                            </div>
+                            <button class="btn-pola" onclick="bukaPola('${game.nama}')">LIHAT POLA</button>
+                        </div>
+                    </div>
+                `;
+                grid.innerHTML += card;
+            });
+        }
+
+        // Filter Provider
+        function filterProvider(provider, btn) {
+            document.querySelectorAll('.prov-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            if(provider === 'all') {
+                renderGames(rtpDatabase);
+            } else {
+                const filtered = rtpDatabase.filter(g => g.provider === provider);
+                renderGames(filtered);
+            }
+        }
+
+        // Search
+        searchInput.addEventListener('keyup', (e) => {
+            const key = e.target.value.toLowerCase();
+            const filtered = rtpDatabase.filter(g => g.nama.toLowerCase().includes(key));
+            renderGames(filtered);
+        });
+
+        // Modal
+        function bukaPola(nama) {
+            document.getElementById('modalTitle').innerText = nama;
+            modal.style.display = 'flex';
+        }
+        function tutupModal() { modal.style.display = 'none'; }
+        window.onclick = function(e) { if(e.target == modal) tutupModal(); }
+
+        // Init
+        document.addEventListener('DOMContentLoaded', () => renderGames(rtpDatabase));
+    </script>
+</body>
+</html>

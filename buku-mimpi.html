@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JAGUAR77 - Mesin Tafsir Mimpi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Rajdhani:wght@500;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        /* --- SETTING UTAMA --- */
+        :root {
+            --gold: #FFD700;
+            --gold-glow: #FFA500;
+            --dark-glass: rgba(8, 8, 8, 0.95);
+            --border-color: rgba(255, 215, 0, 0.25);
+            --neon-green: #00ff88;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: #050505;
+            font-family: 'Rajdhani', sans-serif;
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+            padding: 20px;
+        }
+
+        /* Video Background */
+        .video-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
+        .video-bg { width: 100%; height: 100%; object-fit: cover; }
+        .video-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at center, rgba(0,0,0,0.4) 0%, #000 100%);
+        }
+
+        .fixed-back {
+            position: absolute; top: 20px; left: 20px;
+            color: #888; text-decoration: none; font-weight: bold; font-family: 'Orbitron';
+            z-index: 100; transition: 0.3s;
+        }
+        .fixed-back:hover { color: var(--gold); }
+
+        /* --- MESIN UTAMA (WRAPPER) --- */
+        .engine-wrapper {
+            width: 100%;
+            max-width: 850px; /* Diperlebar sedikit biar muat banyak data */
+            background: var(--dark-glass);
+            border: 2px solid var(--border-color);
+            border-radius: 20px;
+            box-shadow: 0 0 60px rgba(0,0,0,0.8), inset 0 0 40px rgba(255, 215, 0, 0.05);
+            overflow: hidden;
+            backdrop-filter: blur(15px);
+            position: relative;
+        }
+
+        /* HEADER */
+        .engine-header {
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+            background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.05), transparent);
+        }
+        .engine-title {
+            font-family: 'Orbitron'; font-size: 1.5rem; color: var(--gold);
+            text-shadow: 0 0 15px var(--gold-glow); letter-spacing: 2px;
+        }
+        .live-badge {
+            font-size: 0.7rem; background: rgba(0, 255, 136, 0.1); color: var(--neon-green);
+            padding: 2px 8px; border-radius: 4px; border: 1px solid var(--neon-green);
+            margin-left: 10px; vertical-align: middle; animation: blink 2s infinite;
+        }
+        @keyframes blink { 50% { opacity: 0.5; } }
+
+        /* INPUT AREA */
+        .input-zone { padding: 30px; display: flex; flex-direction: column; gap: 20px; }
+        
+        .input-row {
+            display: grid; grid-template-columns: 1fr 0.1fr 1fr; gap: 15px; align-items: end;
+        }
+
+        .input-group label {
+            display: block; color: var(--gold); font-size: 0.8rem;
+            margin-bottom: 8px; font-family: 'Orbitron'; letter-spacing: 1px;
+        }
+
+        .big-input {
+            width: 100%; background: rgba(0,0,0,0.6);
+            border: 1px solid #444; color: white; padding: 15px;
+            font-size: 1.1rem; text-align: center; font-weight: bold;
+            border-radius: 10px; text-transform: uppercase; font-family: 'Rajdhani';
+            outline: none; transition: 0.3s;
+        }
+        .big-input:focus {
+            border-color: var(--gold); box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
+        }
+        .connector { text-align: center; color: #444; font-size: 1.5rem; padding-bottom: 10px; }
+
+        .action-btn {
+            width: 100%; padding: 18px;
+            background: linear-gradient(90deg, #b8860b, #ffd700, #b8860b);
+            background-size: 200%; border: none; border-radius: 10px;
+            font-family: 'Orbitron'; font-weight: 900; font-size: 1.1rem;
+            color: black; cursor: pointer; text-transform: uppercase; letter-spacing: 2px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.5); transition: 0.3s;
+            animation: glowMove 3s infinite linear;
+        }
+        .action-btn:hover { transform: scale(1.02); box-shadow: 0 0 30px var(--gold); }
+        @keyframes glowMove { to { background-position: 200%; } }
+
+        /* --- DATA PENCARIAN TERAKHIR (TESTIMONI) --- */
+        .live-stream-area {
+            border-top: 1px dashed rgba(255,255,255,0.1);
+            background: rgba(0,0,0,0.3);
+            padding: 25px 30px;
+        }
+
+        .stream-title {
+            font-size: 0.75rem; color: #888; margin-bottom: 15px;
+            font-family: 'Orbitron'; letter-spacing: 1px; text-transform: uppercase;
+        }
+        .stream-title i { color: var(--neon-green); margin-right: 5px; }
+
+        /* Grid Data Diperbanyak */
+        .chip-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); /* Ukuran pas di HP */
+            gap: 12px;
+        }
+
+        .data-chip {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 8px;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: 0.3s;
+        }
+        .data-chip:hover {
+            background: rgba(255, 215, 0, 0.05);
+            border-color: rgba(255, 215, 0, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .chip-icon {
+            width: 32px; height: 32px;
+            background: rgba(0,0,0,0.5); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--gold); font-size: 0.9rem;
+        }
+
+        .chip-info { display: flex; flex-direction: column; }
+        .chip-name { font-size: 0.7rem; font-weight: bold; color: #aaa; text-transform: uppercase; }
+        .chip-val { font-family: 'Orbitron'; font-size: 0.95rem; color: var(--gold); font-weight: bold; letter-spacing: 1px; }
+
+
+        /* --- HASIL PANEL (HIDDEN) --- */
+        .result-zone {
+            background: rgba(15,15,15,0.98);
+            border-top: 2px solid var(--gold);
+            padding: 30px; text-align: center; position: absolute; bottom: 0; left: 0; width: 100%;
+            transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 10;
+        }
+        .result-zone.active { transform: translateY(0); }
+
+        .res-close {
+            position: absolute; top: 15px; right: 20px; color: #666; cursor: pointer; font-size: 1.5rem;
+        }
+        .res-title { font-family: 'Orbitron'; color: white; margin-bottom: 20px; font-size: 1.1rem; }
+        
+        .numbers-display { display: flex; justify-content: center; gap: 10px; }
+        .num-card {
+            background: #000; border: 1px solid #333; border-radius: 8px;
+            padding: 15px 10px; min-width: 80px; flex: 1;
+        }
+        .val { font-family: 'Orbitron'; font-size: 1.8rem; font-weight: bold; color: var(--gold); }
+        .lbl { font-size: 0.65rem; color: #888; display: block; margin-bottom: 5px; }
+
+        @media (max-width: 600px) {
+            .input-row { grid-template-columns: 1fr; }
+            .connector { transform: rotate(90deg); padding: 5px; }
+            .chip-grid { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="video-container">
+        <video autoplay muted loop playsinline class="video-bg">
+            <source src="assets/images/bg-jaguar.mp4" type="video/mp4">
+        </video>
+        <div class="video-overlay"></div>
+    </div>
+
+    <a href="index.html" class="fixed-back"><i class="fas fa-arrow-left"></i> KEMBALI MENU</a>
+
+    <div class="engine-wrapper">
+        
+        <div class="engine-header">
+            <div class="engine-title">MESIN JAGUAR <span class="live-badge">AKTIF</span></div>
+        </div>
+
+        <div class="input-zone">
+            <div class="input-row">
+                <div class="input-group">
+                    <label><i class="fas fa-brain"></i> MIMPI / KEJADIAN ALAM</label>
+                    <input type="text" id="inputMimpi" class="big-input" placeholder="CONTOH: ULAR" autocomplete="off">
+                </div>
+                <div class="connector"><i class="fas fa-plus"></i></div>
+                <div class="input-group">
+                    <label><i class="fas fa-user"></i> NAMA ANDA</label>
+                    <input type="text" id="inputNama" class="big-input" placeholder="CONTOH: BUDI" autocomplete="off">
+                </div>
+            </div>
+            
+            <button class="action-btn" onclick="prosesHitung()">
+                <i class="fas fa-bolt"></i> HITUNG ANGKA HOKI
+            </button>
+        </div>
+
+        <div class="live-stream-area">
+            <div class="stream-title"><i class="fas fa-satellite-dish"></i> PENCARIAN TERAKHIR MEMBER</div>
+            
+            <div class="chip-grid">
+                <div class="data-chip">
+                    <div class="chip-icon"><i class="fas fa-dragon"></i></div>
+                    <div class="chip-info"><div class="chip-name">NAGA</div><div class="chip-val">8219</div></div>
+                </div>
+                <div class="data-chip">
+                    <div class="chip-icon"><i class="fas fa-dog"></i></div>
+                    <div class="chip-info"><div class="chip-name">ANJING</div><div class="chip-val">1077</div></div>
+                </div>
+                <div class="data-chip">
+                    <div class="chip-icon"><i class="fas fa-fire"></i></div>
+                    <div class="chip-info"><div class="chip-name">API</div><div class="chip-val">4511</div></div>
+                </div>
+                <div class="data-chip">
+                    <div class="chip-icon"><i class="fas fa-water"></i></div>
+                    <div class="chip-info"><div class="chip-name">BANJIR</div><div class="chip-val">5821</div></div>
+                </div>
+                <div class="data-chip">
+                    <div class="chip-icon"><i class="fas fa-money-bill-wave"></i></div>
+                    <div class="chip-info"><div class="chip-name">UANG</div><div class="chip-val">2981</div></div>
+                </div>
+                <div class="data-chip">
+                    <div class="chip-icon"><i class="fas fa-skull"></i></div>
+                    <div class="chip-info"><div class="chip-name">HANTU</div><div class="chip-val">0158</div></div>
+                </div>
+                <div class="data-chip">
+                    <div class="chip-icon"><i class="fas fa-user-secret"></i></div>
+                    <div class="chip-info"><div class="chip-name">MALING</div><div class="chip-val">3204</div></div>
+                </div>
+                <div class="data-chip">
+                    <div class="chip-icon"><i class="fas fa-shield-alt"></i></div>
+                    <div class="chip-info"><div class="chip-name">POLISI</div><div class="chip-val">8821</div></div>
+                </div>
+                <div class="data-chip">
+                    <div class="chip-icon"><i class="fas fa-cloud-showers-heavy"></i></div>
+                    <div class="chip-info"><div class="chip-name">HUJAN</div><div class="chip-val">6512</div></div>
+                </div>
+                <div class="data-chip">
+                    <div class="chip-icon"><i class="fas fa-gem"></i></div>
+                    <div class="chip-info"><div class="chip-name">EMAS</div><div class="chip-val">9901</div></div>
+                </div>
+                <div class="data-chip">
+                    <div class="chip-icon"><i class="fas fa-baby"></i></div>
+                    <div class="chip-info"><div class="chip-name">BAYI</div><div class="chip-val">1102</div></div>
+                </div>
+                <div class="data-chip">
+                    <div class="chip-icon"><i class="fas fa-fish"></i></div>
+                    <div class="chip-info"><div class="chip-name">IKAN</div><div class="chip-val">4033</div></div>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="resultZone" class="result-zone">
+            <i class="fas fa-times res-close" onclick="tutupResult()"></i>
+            <div class="res-title">HASIL PREDIKSI UNTUK: <span id="resName" style="color:var(--gold)">---</span></div>
+            
+            <div class="numbers-display">
+                <div class="num-card"><span class="lbl">2D BELAKANG</span><div class="val" id="out2D">00</div></div>
+                <div class="num-card"><span class="lbl">3D TENGAH</span><div class="val" id="out3D">000</div></div>
+                <div class="num-card" style="border:1px solid var(--gold)"><span class="lbl" style="color:var(--gold)">4D LENGKAP</span><div class="val" id="out4D">0000</div></div>
+            </div>
+            <div style="margin-top:20px; font-size:0.7rem; color:#444;">DATA BERHASIL DIOLAH DARI DATABASE JAGUAR</div>
+        </div>
+
+    </div>
+
+    <script>
+        const inpMimpi = document.getElementById('inputMimpi');
+        const inpNama = document.getElementById('inputNama');
+        const resultZone = document.getElementById('resultZone');
+        const resName = document.getElementById('resName');
+        const out2D = document.getElementById('out2D');
+        const out3D = document.getElementById('out3D');
+        const out4D = document.getElementById('out4D');
+
+        function prosesHitung() {
+            const mimpi = inpMimpi.value.trim().toUpperCase();
+            const nama = inpNama.value.trim().toUpperCase();
+
+            if(mimpi.length < 2) { alert("Tulis mimpi minimal 2 huruf bosku!"); return; }
+
+            // Rumus Energi (A=1 ... Z=26)
+            const combined = (mimpi + nama).replace(/[^A-Z]/g, '');
+            let totalEnergy = 0;
+            for(let i=0; i<combined.length; i++) totalEnergy += (combined.charCodeAt(i) - 64);
+
+            // Rumus Kepala & Ekor
+            let head = (combined.charCodeAt(0) * combined.length) + 10;
+            if(head > 99) head = head % 90 + 10;
+
+            let tail = totalEnergy;
+            while(tail > 99) tail = Math.floor(tail / 1.5);
+            if(tail < 10) tail += 10;
+
+            const final4D = `${Math.floor(head)}${Math.floor(tail)}`;
+
+            // Tampilkan
+            resName.innerText = nama || 'TAMU';
+            out4D.innerText = final4D;
+            out3D.innerText = final4D.substring(1);
+            out2D.innerText = final4D.substring(2);
+
+            resultZone.classList.add('active');
+        }
+
+        function tutupResult() {
+            resultZone.classList.remove('active');
+        }
+
+        // Tombol Enter
+        inpMimpi.addEventListener('keypress', (e) => { if(e.key === 'Enter') prosesHitung() });
+        inpNama.addEventListener('keypress', (e) => { if(e.key === 'Enter') prosesHitung() });
+    </script>
+</body>
+</html>
