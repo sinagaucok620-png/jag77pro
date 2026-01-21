@@ -8,19 +8,33 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <style>
-        /* --- TEMA JAGUAR LUXURY --- */
+        /* --- TEMA ORANGE SHATTER --- */
         :root {
-            --gold: #FFD700; 
-            --gold-glow: #FF8C00;
-            --glass-bg: rgba(15, 10, 5, 0.92); 
-            --glass-border: rgba(255, 215, 0, 0.25);
+            --primary: #ff9000; 
+            --primary-dark: #ff4500;
+            --bg-glass: rgba(10, 5, 0, 0.95);
+            --bg-sidebar: #050200; 
+            --border-color: rgba(255, 144, 0, 0.5);
             --neon-green: #00ff88;
-            --neon-red: #ff3333;
-            --neon-yellow: #ffee00;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background-color: #050200; font-family: 'Poppins', sans-serif; color: white; min-height: 100vh; }
+        
+        /* Scrollbar Global (Kecil & Rapi) */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #000; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+
+        body { 
+            background-color: #050200; 
+            font-family: 'Poppins', sans-serif; 
+            color: white; 
+            min-height: 100vh; 
+            padding-top: 60px; 
+            padding-bottom: 120px; 
+            overflow-x: hidden;
+        }
 
         /* Video Background */
         .video-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
@@ -30,201 +44,230 @@
             background: radial-gradient(circle at center, rgba(30, 15, 0, 0.6) 0%, rgba(0, 0, 0, 0.95) 100%);
         }
 
-        /* --- HEADER --- */
-        .header-bar {
-            padding: 15px 20px;
-            background: rgba(10, 5, 0, 0.95);
-            border-bottom: 1px solid var(--glass-border);
-            position: sticky; top: 0; z-index: 100;
-            display: flex; justify-content: space-between; align-items: center;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.8);
+        /* --- 1. TOP RUNNING TEXT --- */
+        .marquee-top {
+            background: #000;
+            border-bottom: 2px solid var(--primary);
+            height: 50px; 
+            display: flex; align-items: center;
+            overflow: hidden;
+            position: fixed; top: 0; left: 0; width: 100%; 
+            z-index: 5000; box-shadow: 0 5px 20px rgba(0,0,0,0.8);
         }
-        .btn-back { color: var(--gold); text-decoration: none; font-weight: bold; font-size: 0.9rem; display: flex; align-items: center; gap: 8px; }
-        .brand-logo img { height: 40px; filter: drop-shadow(0 0 5px var(--gold-glow)); }
 
-        /* --- PROVIDER MENU --- */
-        .provider-scroll {
-            display: flex; gap: 10px; overflow-x: auto; padding: 20px;
-            background: rgba(0,0,0,0.3);
-            scrollbar-width: none; 
-        }
-        /* --- PROVIDER MENU (REVISI EXCLUSIVE) --- */
-        .provider-scroll {
-            display: flex;
-            gap: 15px; /* Jarak antar tombol */
-            overflow-x: auto;
-            padding: 25px 20px; /* Padding diperbesar agar bayangan tidak terpotong */
-            background: rgba(0,0,0,0.2); /* Latar belakang jalur transparan */
-            scrollbar-width: none; /* Sembunyikan scrollbar Firefox */
-            mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent); /* Efek memudar di kiri kanan */
-            -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
-        }
-        .provider-scroll::-webkit-scrollbar { display: none; } /* Sembunyikan scrollbar Chrome */
-
-        /* TOMBOL PROVIDER (STATE MATI/INACTIVE) */
-        .prov-btn {
-            position: relative;
-            background: rgba(255, 255, 255, 0.03); /* Glass Dark */
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            padding: 12px 30px; /* Lebih lebar agar lega */
-            border-radius: 50px; /* Pill Shape */
-            color: #888;
+        .marquee-top-content {
             white-space: nowrap;
-            cursor: pointer;
-            font-family: 'Orbitron', sans-serif;
+            display: inline-block;
+            animation: scrollText 40s linear infinite;
+        }
+        
+        .mq-item { 
+            display: inline-block; padding-right: 80px;
+            font-size: 1rem; font-family: 'Orbitron'; 
+            letter-spacing: 0.5px; line-height: 50px;
+        }
+        .mq-highlight { color: var(--neon-green); font-weight: bold; text-shadow: 0 0 5px var(--neon-green); }
+        .mq-alert { color: var(--primary); font-weight: bold; }
+
+        @keyframes scrollText { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+
+        /* --- 2. SIDEBAR MELAYANG (ANTI-GLITCH VERSION) --- */
+        .sidebar {
+            position: fixed;
+            top: 70px; 
+            bottom: 110px; 
+            left: 20px; 
+            width: 280px; 
+            
+            /* --- PERBAIKAN SKIN GAMBAR --- */
+            /* 1. Gradasi Gelap di Atas (Agar menu terbaca) */
+            /* 2. Gambar Sidebar Skin di Bawah */
+            background: 
+                linear-gradient(to bottom, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.8) 50%, rgba(0,0,0,0.2) 100%),
+                url('assets/images/sidebar-skin.png');
+            
+            background-position: bottom center; /* KUNCI: Jaguar selalu di bawah */
+            background-size: contain; /* Gambar pas lebar, tidak terpotong */
+            background-repeat: no-repeat;
+            background-color: #000; /* Warna dasar hitam pekat */
+
+            /* Border & Shadow */
+            border: 1px solid var(--primary);
+            box-shadow: 0 0 30px rgba(0,0,0,0.9), 0 0 15px rgba(255,144,0,0.1);
+            border-radius: 20px;
+            
+            z-index: 4000; 
+            overflow: hidden; /* Sembunyikan scrollbar induk */
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Area Menu yang Bisa di-Scroll (Agar Gambar Jaguar Tetap Diam) */
+        .sidebar-scroll-area {
+            flex: 1;
+            overflow-y: auto; /* Scroll hanya di area menu */
+            padding-top: 20px;
+            padding-bottom: 20px;
+            scrollbar-width: none; /* Sembunyikan scrollbar */
+        }
+        .sidebar-scroll-area::-webkit-scrollbar { display: none; }
+
+        /* Logo Sidebar */
+        .sidebar-logo {
+            text-align: center; margin-bottom: 20px; padding: 20px 20px 0 20px;
+            flex-shrink: 0; /* Logo tidak ikut scroll */
+        }
+        .sidebar-logo img { width: 100%; max-width: 200px; filter: drop-shadow(0 0 10px var(--primary)); }
+
+        /* Tombol Daftar */
+        .btn-daftar-big {
+            background: linear-gradient(180deg, #ff9000 0%, #ff4500 100%);
+            color: #000;
+            font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: 1rem;
+            text-align: center; padding: 12px 0; margin: 0 20px 20px 20px;
+            border-radius: 50px; text-decoration: none;
+            box-shadow: 0 0 20px rgba(255, 144, 0, 0.6); border: 2px solid #fff;
+            display: block; transition: 0.3s;
+        }
+        .btn-daftar-big:hover { transform: scale(1.05); box-shadow: 0 0 40px var(--primary); background: #fff; }
+
+        /* Menu Links */
+        .sidebar a.menu-link {
+            padding: 12px 25px;
+            text-decoration: none;
             font-size: 0.85rem;
-            font-weight: 600;
-            letter-spacing: 1px;
-            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); /* Transisi halus (kenyal) */
-            overflow: hidden; /* Untuk efek kilat */
+            color: #ccc;
+            display: flex; align-items: center; gap: 15px;
+            transition: 0.3s;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            font-family: 'Orbitron'; letter-spacing: 1px;
+            text-transform: uppercase;
+            /* Efek Glass di belakang teks menu agar terbaca di atas gambar */
+            background: rgba(0,0,0,0.2); 
+            backdrop-filter: blur(2px);
+        }
+        .sidebar a.menu-link:hover, .sidebar a.menu-link.active { 
+            color: #000; background: var(--primary); padding-left: 35px; font-weight: bold; 
+            border-radius: 0 50px 50px 0; margin-right: 10px;
+        }
+        .sidebar i { width: 25px; text-align: center; font-size: 1.1rem; }
+
+        /* --- 3. MAIN CONTENT --- */
+        .main-content {
+            margin-left: 320px; /* Space sidebar */
+            margin-right: 20px; 
+            position: relative;
             z-index: 1;
         }
 
-        /* EFEK HOVER (SAAT MOUSE LEWAT) */
-        .prov-btn:hover {
-            border-color: var(--gold);
-            color: var(--gold);
-            background: rgba(255, 215, 0, 0.1);
-            transform: translateY(-3px); /* Naik sedikit */
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+        /* --- 4. BOTTOM BAR PROMO (FULL WIDTH) --- */
+        .bottom-marquee {
+            position: fixed; bottom: 0; left: 0; width: 100%; height: 90px;
+            background: #000; border-top: 3px solid var(--primary);
+            display: flex; align-items: center; overflow: hidden;
+            z-index: 5000; box-shadow: 0 -5px 20px rgba(0,0,0,0.8);
         }
-
-        /* TOMBOL AKTIF (STATE MENYALA) - EXCLUSIVE GOLD */
-        .prov-btn.active {
-            background: linear-gradient(135deg, #FFD700 0%, #FF8C00 100%); /* Gradasi Emas Mewah */
-            border-color: transparent;
-            color: #000; /* Teks Hitam agar kontras */
-            font-weight: 900;
-            transform: scale(1.05); /* Membesar sedikit */
-            box-shadow: 0 0 25px rgba(255, 140, 0, 0.6); /* Glow Oranye Kuat */
+        .bottom-marquee-content {
+            display: flex; gap: 30px; 
+            animation: scrollImages 60s linear infinite; 
+            padding-left: 100%; 
         }
-
-        /* ANIMASI KILATAN CAHAYA PADA TOMBOL AKTIF */
-        .prov-btn.active::after {
-            content: '';
-            position: absolute;
-            top: 0; left: -100%;
-            width: 50%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent);
-            transform: skewX(-20deg); /* Miringkan cahaya */
-            animation: btnShine 3s infinite; /* Gerak terus menerus */
+        .marquee-img {
+            height: 70px; width: auto; object-fit: contain;
+            border-radius: 8px; border: 1px solid rgba(255, 144, 0, 0.3);
+            transition: 0.3s;
         }
+        .marquee-img:hover { transform: scale(1.05); border-color: var(--primary); box-shadow: 0 0 15px var(--primary); }
+        
+        @keyframes scrollImages { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
 
-        /* ANIMASI KILAT */
-        @keyframes btnShine {
-            0% { left: -100%; }
-            20% { left: 200%; } /* Lewat cepat */
-            100% { left: 200%; } /* Jeda lama */
+        /* --- CONTENT STYLES --- */
+        .provider-wrapper { width: 100%; display: flex; justify-content: center; margin-bottom: 10px; }
+        .provider-scroll { display: flex; gap: 15px; overflow-x: auto; padding: 20px; width: 100%; max-width: 1000px; scrollbar-width: none; }
+        .provider-scroll::-webkit-scrollbar { display: none; }
+        
+        .prov-btn {
+            background: rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,0.2);
+            padding: 10px 25px; border-radius: 50px; color: #aaa; white-space: nowrap; cursor: pointer;
+            font-family: 'Orbitron'; font-size: 0.85rem; transition: 0.3s;
         }
         .prov-btn.active, .prov-btn:hover {
-            background: var(--gold); color: black; border-color: var(--gold);
-            box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
-            font-weight: bold;
+            background: var(--primary); color: #000; font-weight: bold; border-color: var(--primary);
+            box-shadow: 0 0 15px var(--primary); transform: scale(1.05);
         }
 
-        /* --- SEARCH --- */
-        .search-container { padding: 0 20px 20px 20px; max-width: 600px; margin: 0 auto; }
+        .search-container { padding: 0 20px 20px 20px; max-width: 700px; margin: 0 auto; }
         .search-box {
-            width: 100%; padding: 12px 20px 12px 45px;
-            border-radius: 10px; border: 1px solid var(--glass-border);
-            background: rgba(0,0,0,0.6); color: white;
+            width: 100%; padding: 15px 25px 15px 55px; border-radius: 50px;
+            border: 2px solid var(--primary); background: rgba(0,0,0,0.8); color: white; outline: none;
+            font-size: 1rem;
         }
         .search-wrapper { position: relative; }
-        .search-icon { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--gold); }
+        .search-icon { position: absolute; left: 25px; top: 50%; transform: translateY(-50%); color: var(--primary); font-size: 1.2rem; }
 
-        /* --- GRID --- */
-        .game-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); /* Ukuran kartu pas di HP */
-            gap: 15px; padding: 0 20px 80px 20px;
-            max-width: 1200px; margin: 0 auto;
-        }
-
-        /* GAME CARD */
-        .game-card {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 15px; overflow: hidden;
-            position: relative; transition: 0.3s;
-        }
-        .game-card:hover {
-            transform: translateY(-5px); border-color: var(--gold);
-            box-shadow: 0 0 20px rgba(255, 140, 0, 0.3);
-        }
-
-        .card-img-wrap {
-            position: relative; width: 100%; height: 130px; /* Tinggi gambar disesuaikan */
-            background: #111; overflow: hidden;
-        }
+        .game-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 15px; padding: 0 0 30px 0; max-width: 1400px; margin: 0 auto; }
+        .game-card { background: var(--bg-glass); border: 1px solid rgba(255,255,255,0.1); border-radius: 15px; overflow: hidden; position: relative; }
+        .card-img-wrap { width: 100%; aspect-ratio: 1/1; background: #111; overflow: hidden; border-bottom: 1px solid rgba(255,255,255,0.05); }
         .game-img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
         .game-card:hover .game-img { transform: scale(1.1); }
+        .hot-badge { position: absolute; top: 5px; right: 5px; background: red; padding: 2px 5px; font-size: 0.6rem; border-radius: 3px; font-weight: bold; z-index: 5; }
+        .card-body { padding: 12px; text-align: center; }
+        .game-name { font-size: 0.8rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 5px; }
         
-        .hot-badge {
-            position: absolute; top: 5px; right: 5px;
-            background: linear-gradient(45deg, #ff0000, #ff5500);
-            color: white; font-size: 0.6rem; padding: 2px 6px;
-            border-radius: 4px; font-weight: bold;
-            box-shadow: 0 0 10px red; animation: pulse 1s infinite;
+        .rtp-stat { display: flex; justify-content: space-between; font-size: 0.7rem; margin-bottom: 5px; color: #bbb; }
+        .progress-track { width: 100%; height: 6px; background: #333; border-radius: 5px; overflow: hidden; margin-bottom: 10px; }
+        .progress-fill { height: 100%; }
+        .bg-high { background: #00ff88; } .bg-med { background: #ffaa00; } .bg-low { background: #ff0000; }
+        .stat-high { color: #00ff88; } .stat-med { color: #ffaa00; } .stat-low { color: #ff0000; }
+        
+        .btn-pola { width: 100%; background: rgba(255,255,255,0.1); border: 1px solid var(--primary); color: var(--primary); padding: 8px; font-size: 0.75rem; border-radius: 8px; cursor: pointer; transition: 0.3s; }
+        .btn-pola:hover { background: var(--primary); color: #000; }
+
+        @keyframes spinBorder { 100% { transform: translate(-50%, -50%) rotate(360deg); } }
+        .gacor-mode { border: none !important; }
+        .gacor-mode::before { content: ''; position: absolute; top: 50%; left: 50%; width: 200%; height: 200%; background: conic-gradient(transparent, #ff9000, #fff); transform: translate(-50%, -50%); animation: spinBorder 3s linear infinite; }
+        .gacor-mode::after { content: ''; position: absolute; inset: 3px; background: #0a0500; border-radius: 13px; }
+        .gacor-mode .card-img-wrap, .gacor-mode .card-body { position: relative; z-index: 2; }
+
+        /* MODAL */
+        .modal { display: none; position: fixed; z-index: 6000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); justify-content: center; align-items: center; }
+        .modal-content { background: #111; padding: 20px; border: 1px solid var(--primary); border-radius: 10px; width: 90%; max-width: 350px; text-align: center; }
+        .close-modal { float:right; cursor:pointer; font-size:1.5rem; color:white; }
+
+        /* --- HEADER MOBILE (Hanya Muncul di HP) --- */
+        .header-mobile { display: none; }
+
+        /* --- RESPONSIVE MOBILE (HP) --- */
+        @media (max-width: 768px) {
+            /* Sidebar Sembunyi, tidak melayang lagi tapi full height saat aktif */
+            .sidebar { 
+                left: -320px; top: 0; bottom: 0; height: 100%; width: 280px;
+                border-radius: 0; border-right: 1px solid var(--primary);
+                z-index: 6000;
+                /* Background image di HP disesuaikan */
+                background-position: center;
+                background-size: cover;
+                background-image: url('assets/images/sidebar-skin.png'); /* Panggil ulang */
+            }
+            .sidebar.active { left: 0; }
+            
+            /* Content Full Width */
+            .main-content { margin-left: 0; margin-right: 0; width: 100%; padding: 0 15px; }
+            
+            /* Marquee Atas */
+            .marquee-top { top: 50px; } 
+            
+            /* Bottom Promo */
+            .bottom-marquee { height: 70px; }
+            .marquee-img { height: 60px; }
+            
+            /* Header HP Muncul */
+            .header-mobile {
+                display: flex; height: 50px; background: #000; border-bottom: 1px solid var(--primary);
+                justify-content: space-between; align-items: center; padding: 0 15px;
+                position: sticky; top: 0; z-index: 5500;
+            }
         }
-
-        .card-body { padding: 10px; text-align: center; }
-        .game-name { font-size: 0.8rem; margin-bottom: 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #ddd; }
-
-        /* RTP BAR */
-        .rtp-stat { display: flex; justify-content: space-between; font-size: 0.7rem; margin-bottom: 5px; color: #ccc; }
-        .rtp-val { font-weight: bold; font-family: 'Orbitron'; }
-        
-        .progress-track { width: 100%; height: 6px; background: #333; border-radius: 4px; overflow: hidden; margin-bottom: 10px; }
-        .progress-fill { height: 100%; width: 0%; border-radius: 4px; transition: width 1.5s ease-in-out; position: relative; }
-        
-        .progress-fill::after {
-            content:''; position: absolute; top:0; left:0; bottom:0; width: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent);
-            transform: translateX(-100%); animation: shimmer 2s infinite;
-        }
-
-        /* Warna Status */
-        .stat-high { color: var(--neon-green); }
-        .bg-high { background: linear-gradient(90deg, #00b09b, var(--neon-green)); box-shadow: 0 0 5px var(--neon-green); }
-        
-        .stat-med { color: var(--neon-yellow); }
-        .bg-med { background: linear-gradient(90deg, #ff9900, var(--neon-yellow)); }
-        
-        .stat-low { color: var(--neon-red); }
-        .bg-low { background: linear-gradient(90deg, #800000, var(--neon-red)); }
-
-        .btn-pola {
-            display: block; width: 100%;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: var(--gold); padding: 8px; border-radius: 8px;
-            font-size: 0.75rem; font-weight: bold; cursor: pointer; transition: 0.3s;
-        }
-        .btn-pola:hover { background: var(--gold); color: black; box-shadow: 0 0 15px var(--gold); }
-
-        /* MODAL POPUP */
-        .modal {
-            display: none; position: fixed; z-index: 999; left: 0; top: 0; width: 100%; height: 100%;
-            background-color: rgba(0,0,0,0.8); backdrop-filter: blur(8px);
-            align-items: center; justify-content: center;
-        }
-        .modal-content {
-            background: linear-gradient(145deg, #151515, #000);
-            border: 1px solid var(--gold);
-            width: 90%; max-width: 380px;
-            padding: 25px; border-radius: 15px; text-align: center;
-            position: relative; box-shadow: 0 0 50px rgba(255, 140, 0, 0.4);
-            animation: popUp 0.3s ease-out;
-        }
-        .close-modal { position: absolute; top: 15px; right: 20px; color: #fff; font-size: 1.5rem; cursor: pointer; }
-        
-        .pola-box { background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; margin: 20px 0; text-align: left; }
-        .pola-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; font-size: 0.9rem; color: #ddd; }
-        .pola-icon { color: var(--neon-green); width: 20px; text-align: center; }
-
-        @keyframes shimmer { 100% { transform: translateX(100%); } }
-        @keyframes popUp { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
     </style>
 </head>
 <body>
@@ -236,68 +279,82 @@
         <div class="video-overlay"></div>
     </div>
 
-    <div class="header-bar">
-        <a href="index.html" class="btn-back"><i class="fas fa-chevron-left"></i> HOME</a>
-        <div class="brand-logo">
+    <div class="header-mobile">
+        <div style="font-size:1.5rem; color:var(--primary);" onclick="toggleSidebar()"><i class="fas fa-bars"></i></div>
+        <img src="assets/images/logo-jaguar.png" style="height:30px;">
+        <a href="index.html" style="color:white;"><i class="fas fa-home"></i></a>
+    </div>
+
+    <div id="mySidebar" class="sidebar">
+        <div class="sidebar-logo">
             <img src="assets/images/logo-jaguar.png" alt="JAGUAR77">
         </div>
-    </div>
-
-<div class="provider-scroll">
-        <button class="prov-btn active" onclick="filterProvider('all', this)">
-            <i class="fas fa-th-large"></i> ALL GAMES
-        </button>
-        <button class="prov-btn" onclick="filterProvider('Pragmatic Play', this)">
-            <i class="fas fa-crown"></i> PRAGMATIC
-        </button>
-        <button class="prov-btn" onclick="filterProvider('PG Soft', this)">
-            <i class="fas fa-gem"></i> PG SOFT
-        </button>
-        <button class="prov-btn" onclick="filterProvider('Habanero', this)">
-            <i class="fas fa-fire"></i> HABANERO
-        </button>
-        <button class="prov-btn" onclick="filterProvider('Microgaming', this)">
-            <i class="fas fa-coins"></i> MICROGAMING
-        </button>
-        <button class="prov-btn" onclick="filterProvider('Spadegaming', this)">
-            <i class="fas fa-shield-alt"></i> SPADEGAMING
-        </button>
-        <button class="prov-btn" onclick="filterProvider('Joker Gaming', this)">
-            <i class="fas fa-mask"></i> JOKER123
-        </button>
-        <button class="prov-btn" onclick="filterProvider('NoLimit City', this)">
-            <i class="fas fa-skull"></i> NOLIMIT
-        </button>
-        <button class="prov-btn" onclick="filterProvider('CQ9', this)">
-            <i class="fas fa-dragon"></i> CQ9
-        </button>
-    </div>
-    
-    <div class="search-container">
-        <div class="search-wrapper">
-            <i class="fas fa-search search-icon"></i>
-            <input type="text" id="searchInput" class="search-box" placeholder="Cari game (Contoh: Zeus, Mahjong)...">
+        
+        <a href="#" class="btn-daftar-big">
+            <i class="fas fa-user-plus" style="margin-right:10px;"></i> DAFTAR AKUN
+        </a>
+        
+        <div class="sidebar-scroll-area">
+            <a href="#" class="menu-link"><i class="fas fa-sign-in-alt"></i> LOGIN MEMBER</a>
+            <a href="index.html" class="menu-link"><i class="fas fa-home"></i> HOME UTAMA</a>
+            <a href="rtp-dashboard.html" class="menu-link active"><i class="fas fa-chart-line"></i> RTP SLOT GACOR</a>
+            <a href="buku-mimpi.html" class="menu-link"><i class="fas fa-book"></i> BUKU MIMPI</a>
+            <a href="#" class="menu-link"><i class="fas fa-futbol"></i> JADWAL BOLA</a>
+            <a href="#" class="menu-link"><i class="fas fa-dice"></i> LIVE CASINO</a>
+            <a href="#" class="menu-link"><i class="fas fa-fish"></i> TEMBAK IKAN</a>
+            <a href="#" class="menu-link"><i class="fas fa-gift"></i> PROMOSI</a>
+            <a href="#" class="menu-link"><i class="fas fa-download"></i> DOWNLOAD APK</a>
+            <a href="#" class="menu-link"><i class="fas fa-headset"></i> LIVE CHAT</a>
         </div>
     </div>
 
-    <div id="gameGrid" class="game-grid"></div>
+    <div id="overlay" onclick="toggleSidebar()" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:5800; display:none;"></div>
+
+    <div class="marquee-top">
+        <div class="marquee-top-content" id="marqueeText"></div>
+    </div>
+
+    <div class="main-content">
+        <div class="content-padding">
+            <div class="provider-wrapper">
+                <div class="provider-scroll">
+                    <button class="prov-btn active" onclick="filterProvider('all', this)">ALL GAMES</button>
+                    <button class="prov-btn" onclick="filterProvider('Pragmatic Play', this)">PRAGMATIC</button>
+                    <button class="prov-btn" onclick="filterProvider('PG Soft', this)">PG SOFT</button>
+                    <button class="prov-btn" onclick="filterProvider('Habanero', this)">HABANERO</button>
+                    <button class="prov-btn" onclick="filterProvider('Microgaming', this)">MICROGAMING</button>
+                    <button class="prov-btn" onclick="filterProvider('Spadegaming', this)">SPADEGAMING</button>
+                    <button class="prov-btn" onclick="filterProvider('Joker Gaming', this)">JOKER123</button>
+                    <button class="prov-btn" onclick="filterProvider('NoLimit City', this)">NOLIMIT</button>
+                </div>
+            </div>
+            
+            <div class="search-container">
+                <div class="search-wrapper">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" id="searchInput" class="search-box" placeholder="Cari game favorit...">
+                </div>
+            </div>
+
+            <div id="gameGrid" class="game-grid"></div>
+        </div>
+    </div>
+
+    <div class="bottom-marquee">
+        <div class="bottom-marquee-content" id="imgMarquee"></div>
+    </div>
 
     <div id="polaModal" class="modal">
         <div class="modal-content">
             <span class="close-modal" onclick="tutupModal()">&times;</span>
-            <h3 id="modalTitle" style="color:var(--gold); font-family:'Orbitron';">GAME TITLE</h3>
-            <p style="color:#aaa; font-size:0.8rem;">Pola Gacor Update: <span id="jamUpdate">Now</span></p>
-            
-            <div class="pola-box">
-                <div class="pola-row"><i class="fas fa-bolt pola-icon"></i> <span>Turbo Spin <b>10x</b> (DC OFF)</span></div>
-                <div class="pola-row"><i class="fas fa-bolt pola-icon"></i> <span>Turbo Spin <b>20x</b> (DC ON)</span></div>
-                <div class="pola-row"><i class="fas fa-hand-pointer pola-icon"></i> <span>Manual Spin <b>7x</b></span></div>
-                <div class="pola-row"><i class="fas fa-check-circle" style="color:var(--gold)"></i> <span>Jam Gacor: <b>01:00 - 04:00</b></span></div>
+            <h3 id="modalTitle" style="color:var(--primary);">GAME TITLE</h3>
+            <p style="color:#aaa; font-size:0.8rem;">Pola Gacor Update: Now</p>
+            <div style="text-align:left; background:rgba(255,255,255,0.1); padding:10px; border-radius:10px; margin:10px 0;">
+                <div style="margin-bottom:5px;"><i class="fas fa-bolt" style="color:#0f0;"></i> Turbo 10x (DC OFF)</div>
+                <div style="margin-bottom:5px;"><i class="fas fa-bolt" style="color:#0f0;"></i> Turbo 20x (DC ON)</div>
+                <div><i class="fas fa-hand-pointer" style="color:#0f0;"></i> Manual 7x</div>
             </div>
-
-            <button style="width:100%; padding:15px; background:linear-gradient(90deg, #FF8C00, #FFD700); border:none; border-radius:50px; font-weight:bold; cursor:pointer; color:black;">
-                MAIN SEKARANG
-            </button>
+            <button style="width:100%; padding:10px; background:var(--primary); border:none; border-radius:20px; font-weight:bold;">MAIN SEKARANG</button>
         </div>
     </div>
 
@@ -307,71 +364,102 @@
         const modal = document.getElementById('polaModal');
         const searchInput = document.getElementById('searchInput');
 
-        // Fungsi Render
+        // 1. DATA TEKS BERJALAN
+        const textData = [
+            "INFO GACOR: <span class='mq-alert'>GATES OF OLYMPUS (98.8%)</span> & <span class='mq-alert'>MAHJONG WAYS (99.5%)</span> SEDANG ON FIRE! 🔥",
+            "SELAMAT: Bpk. <span class='mq-highlight'>BUDI***</span> BARU SAJA MAXWIN <span class='mq-highlight'>IDR 50.000.000</span> (Mahjong Ways 2)",
+            "PROMO SPESIAL: <span class='mq-highlight'>BONUS NEW MEMBER 100%</span> + GARANSI KEKALAHAN 🎁",
+            "SYSTEM: DEPOSIT QRIS & E-WALLET PROSES <span class='mq-highlight'>1 DETIK</span> LANGSUNG MASUK! 🚀"
+        ];
+
+        // 2. DATA GAMBAR PROMO
+        const promoImages = [];
+        for(let i = 1; i <= 13; i++) {
+            promoImages.push(`PROMOJAG${i}.png`);
+        }
+
+        function initDashboard() {
+            // A. Load Text
+            const textContainer = document.getElementById('marqueeText');
+            let txtHTML = "";
+            textData.forEach(txt => {
+                txtHTML += `<span class="mq-item"><i class="fas fa-bullhorn" style="color:#ff9000; margin-right:10px;"></i> ${txt}</span>`;
+            });
+            textContainer.innerHTML = txtHTML + txtHTML + txtHTML; 
+
+            // B. Load Gambar Promo
+            const imgContainer = document.getElementById('imgMarquee');
+            let imgHTML = "";
+            promoImages.forEach(img => {
+                imgHTML += `<img src="assets/images/${img}" class="marquee-img" alt="Promo">`;
+            });
+            imgContainer.innerHTML = imgHTML + imgHTML + imgHTML; 
+
+            // C. Render Game
+            renderGames(rtpDatabase);
+        }
+
+        function toggleSidebar() {
+            const sb = document.getElementById("mySidebar");
+            const overlay = document.getElementById("overlay");
+            if (sb.classList.contains('active')) {
+                sb.classList.remove('active');
+                overlay.style.display = 'none';
+            } else {
+                sb.classList.add('active');
+                overlay.style.display = 'block';
+            }
+        }
+
         function renderGames(data) {
             grid.innerHTML = '';
+            data.sort((a, b) => b.rtp - a.rtp);
+
             data.forEach(game => {
-                let colorClass = 'bg-low';
-                let textClass = 'stat-low';
-                if(game.rtp >= 90) { colorClass = 'bg-high'; textClass = 'stat-high'; }
-                else if(game.rtp >= 70) { colorClass = 'bg-med'; textClass = 'stat-med'; }
+                let colorClass = 'bg-low'; let textClass = 'stat-low'; let specialClass = '';
+                let badge = '';
 
-                // Ambil gambar dari folder assets/images/
-                const imgPath = `assets/images/${game.img}`;
+                if(game.rtp >= 90) { 
+                    colorClass = 'bg-high'; textClass = 'stat-high'; specialClass = 'gacor-mode'; 
+                    badge = '<span class="hot-badge">GACOR</span>';
+                } else if(game.rtp >= 70) { 
+                    colorClass = 'bg-med'; textClass = 'stat-med'; 
+                }
 
-                const card = `
-                    <div class="game-card">
+                grid.innerHTML += `
+                    <div class="game-card ${specialClass}">
                         <div class="card-img-wrap">
-                            ${game.rtp >= 90 ? '<span class="hot-badge">GACOR</span>' : ''}
-                            <img src="${imgPath}" alt="${game.nama}" class="game-img" onerror="this.src='https://via.placeholder.com/150?text=GAME'">
+                            ${badge}
+                            <img src="assets/images/${game.img}" alt="${game.nama}" class="game-img" onerror="this.src='https://via.placeholder.com/150'">
                         </div>
                         <div class="card-body">
                             <div class="game-name">${game.nama}</div>
-                            <div class="rtp-stat">
-                                <span>RTP Live</span>
-                                <span class="rtp-val ${textClass}">${game.rtp}%</span>
-                            </div>
-                            <div class="progress-track">
-                                <div class="progress-fill ${colorClass}" style="width: ${game.rtp}%"></div>
-                            </div>
+                            <div class="rtp-stat"><span>RTP Live</span><span class="${textClass}">${game.rtp}%</span></div>
+                            <div class="progress-track"><div class="progress-fill ${colorClass}" style="width:${game.rtp}%"></div></div>
                             <button class="btn-pola" onclick="bukaPola('${game.nama}')">LIHAT POLA</button>
                         </div>
                     </div>
                 `;
-                grid.innerHTML += card;
             });
         }
 
-        // Filter Provider
         function filterProvider(provider, btn) {
             document.querySelectorAll('.prov-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-            
-            if(provider === 'all') {
-                renderGames(rtpDatabase);
-            } else {
-                const filtered = rtpDatabase.filter(g => g.provider === provider);
-                renderGames(filtered);
-            }
+            let filtered = (provider === 'all') ? rtpDatabase : rtpDatabase.filter(g => g.provider === provider);
+            renderGames(filtered);
         }
 
-        // Search
         searchInput.addEventListener('keyup', (e) => {
             const key = e.target.value.toLowerCase();
-            const filtered = rtpDatabase.filter(g => g.nama.toLowerCase().includes(key));
-            renderGames(filtered);
+            renderGames(rtpDatabase.filter(g => g.nama.toLowerCase().includes(key)));
         });
 
-        // Modal
-        function bukaPola(nama) {
-            document.getElementById('modalTitle').innerText = nama;
-            modal.style.display = 'flex';
-        }
+        function bukaPola(nama) { document.getElementById('modalTitle').innerText = nama; modal.style.display = 'flex'; }
         function tutupModal() { modal.style.display = 'none'; }
         window.onclick = function(e) { if(e.target == modal) tutupModal(); }
 
-        // Init
-        document.addEventListener('DOMContentLoaded', () => renderGames(rtpDatabase));
+        document.addEventListener('DOMContentLoaded', initDashboard);
     </script>
 </body>
 </html>
