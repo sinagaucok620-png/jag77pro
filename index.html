@@ -10,14 +10,24 @@
     <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 
     <style>
-        /* --- DEFINISI WARNA JAGUAR ORIGINAL --- */
+        /* --- TEMA BARU: ORANGE SHATTER --- */
         :root {
             --bg-black: #050505;
-            --card-bg: rgba(10, 10, 10, 0.90);
-            /* Gradasi Emas Metalik (Lebih Mewah dari Kuning Biasa) */
-            --gold-metallic: linear-gradient(to right, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
-            --gold-text: #FFD700;
-            --border-gold: #B38728;
+            --card-bg: rgba(20, 20, 20, 0.95);
+            
+            /* Warna Utama: Oranye Menyala */
+            --primary: #ff9000;
+            --primary-dark: #ff4500; /* Merah Oranye untuk gradasi */
+            
+            /* Gradasi Tombol Utama */
+            --orange-gradient: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            
+            /* Efek Cahaya */
+            --glow: rgba(255, 144, 0, 0.6);
+            
+            /* Warna Teks & Border */
+            --text-color: #ff9000;
+            --border-color: #ff9000;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -33,65 +43,64 @@
             overflow: hidden;
         }
 
-        /* Video Background (Tetap Ada karena User Suka) */
+        /* Video Background */
         .video-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
-        .video-bg { width: 100%; height: 100%; object-fit: cover; opacity: 0.5; filter: contrast(1.2); }
+        .video-bg { width: 100%; height: 100%; object-fit: cover; opacity: 0.4; filter: contrast(1.2) grayscale(0.5); }
 
         /* --- KARTU VIP UTAMA --- */
         .vip-card {
             width: 90%;
             max-width: 420px;
             background: var(--card-bg);
-            /* Border Emas Ganda yang Tipis & Elegan */
-            border: 1px solid var(--border-gold);
+            border: 2px solid var(--border-color); /* Border Oranye */
             border-radius: 20px;
             padding: 35px 25px;
             text-align: center;
             position: relative;
             backdrop-filter: blur(15px);
-            /* Bayangan Emas Halus di bawah */
-            box-shadow: 0 20px 60px rgba(0,0,0,0.8), 0 0 15px rgba(191, 149, 63, 0.2);
+            /* Bayangan Oranye */
+            box-shadow: 0 0 40px rgba(0,0,0,0.9), 0 0 20px rgba(255, 144, 0, 0.2);
         }
 
-        /* Efek Garis Emas di Atas Kartu (Top Bar) */
+        /* Garis di Atas Kartu */
         .vip-card::before {
             content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
-            width: 40%; height: 3px; background: var(--gold-metallic);
+            width: 40%; height: 4px; 
+            background: var(--primary);
             border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;
-            box-shadow: 0 0 10px var(--gold-text);
+            box-shadow: 0 0 15px var(--glow);
         }
 
         /* --- LOGO & HEADER --- */
         .logo-img {
             width: 200px; height: auto;
             margin-bottom: 5px;
-            filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.4));
+            filter: drop-shadow(0 0 5px var(--glow));
         }
         
         .official-badge {
             display: inline-block;
-            background: rgba(255, 215, 0, 0.1);
-            border: 1px solid var(--border-gold);
+            background: rgba(255, 144, 0, 0.1);
+            border: 1px solid var(--border-color);
             padding: 4px 12px;
             border-radius: 20px;
             font-size: 0.65rem;
-            color: var(--gold-text);
+            color: var(--text-color);
             letter-spacing: 2px;
             text-transform: uppercase;
             margin-bottom: 20px;
         }
-        .official-badge i { color: #2ecc71; margin-right: 5px; }
+        .official-badge i { color: var(--primary); margin-right: 5px; }
 
-        /* --- ANIMASI JAGUAR DUDUK (Lottie) --- */
+        /* --- ANIMASI --- */
         .mascot-display {
             width: 160px; height: 160px;
             margin: 0 auto 15px auto;
             position: relative;
-            /* Efek panggung cahaya di bawah jaguar */
-            background: radial-gradient(circle, rgba(255,215,0,0.15) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(255,144,0,0.15) 0%, transparent 70%);
         }
 
-        /* --- TOMBOL MEWAH (Jelas untuk Orang Tua) --- */
+        /* --- TOMBOL MEWAH --- */
         .menu-area { display: flex; flex-direction: column; gap: 15px; margin-top: 10px; }
 
         .btn-luxury {
@@ -103,28 +112,31 @@
             position: relative; overflow: hidden;
         }
 
-        /* 1. Tombol RTP (Emas Metalik) - Paling Menonjol */
-        .btn-gold {
-            background: var(--gold-metallic);
-            color: #000; /* Tulisan hitam di atas emas = Kontras Tinggi (Mudah Dibaca) */
+        /* TOMBOL UTAMA (ORANGE) */
+        .btn-primary {
+            background: var(--orange-gradient);
+            color: #000; /* Teks Hitam biar terbaca jelas */
             border: none;
-            box-shadow: 0 5px 20px rgba(191, 149, 63, 0.4);
+            box-shadow: 0 0 20px var(--glow);
         }
-        .btn-gold:active { transform: scale(0.98); }
+        .btn-primary:active { transform: scale(0.98); }
         
         .btn-text-main { font-family: 'Poppins'; font-weight: 800; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.5px; }
         .btn-sub { font-size: 0.75rem; font-weight: 600; opacity: 0.8; display: block; margin-top: -2px; }
 
-        /* 2. Tombol Sekunder (Hitam Elegan) */
-        .btn-black {
+        /* TOMBOL SEKUNDER (HITAM) */
+        .btn-secondary {
             background: linear-gradient(145deg, #1a1a1a, #0d0d0d);
             border: 1px solid #333;
             color: #ddd;
         }
-        .btn-black:hover { border-color: var(--border-gold); color: var(--gold-text); }
-        .btn-black i { color: var(--gold-text); font-size: 1.2rem; }
+        .btn-secondary:hover { 
+            border-color: var(--border-color); 
+            color: var(--text-color); 
+            box-shadow: 0 0 10px rgba(255, 144, 0, 0.2);
+        }
+        .btn-secondary i { color: var(--text-color); font-size: 1.2rem; }
 
-        /* Footer */
         .footer {
             margin-top: 30px; border-top: 1px solid rgba(255,255,255,0.1);
             padding-top: 15px; font-size: 0.7rem; color: #666;
@@ -144,7 +156,7 @@
         
         <img src="assets/images/logo-jaguar.png" alt="JAGUAR77" class="logo-img">
         
-        <div class="official-badge"><i class="fas fa-check-circle"></i> SITUS RESMI TERPERCAYA</div>
+        <div class="official-badge"><i class="fas fa-check-circle"></i> SITUS RESMI ORANGE</div>
 
         <div class="mascot-display">
             <lottie-player 
@@ -159,22 +171,22 @@
 
         <div class="menu-area">
             
-            <a href="rtp-dashboard.html" class="btn-luxury btn-gold">
+            <a href="rtp-dashboard.html" class="btn-luxury btn-primary">
                 <div>
                     <span class="btn-text-main">CEK RTP LIVE</span>
                     <span class="btn-sub">Persentase Kemenangan</span>
                 </div>
-                <i class="fas fa-chevron-right" style="font-size:1.2rem; font-weight:bold;"></i>
+                <i class="fas fa-bolt" style="font-size:1.2rem; font-weight:bold;"></i>
             </a>
 
-            <a href="buku-mimpi.html" class="btn-luxury btn-black">
+            <a href="buku-mimpi.html" class="btn-luxury btn-secondary">
                 <div style="display:flex; align-items:center; gap:15px;">
                     <i class="fas fa-book-open"></i>
                     <span class="btn-text-main" style="color:#fff; font-size:1rem;">BUKU MIMPI</span>
                 </div>
             </a>
 
-            <a href="#" class="btn-luxury btn-black">
+            <a href="#" class="btn-luxury btn-secondary">
                 <div style="display:flex; align-items:center; gap:15px;">
                     <i class="fas fa-futbol"></i>
                     <span class="btn-text-main" style="color:#fff; font-size:1rem;">JADWAL BOLA</span>
