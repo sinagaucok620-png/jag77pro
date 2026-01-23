@@ -3,298 +3,489 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JAGUAR77 - Mesin Tafsir Mimpi</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Rajdhani:wght@500;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <title>Buku Mimpi Togel - JAGUAR77</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&family=Orbitron:wght@700;900&family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <style>
-        /* --- BRANDING: ORANGE SHATTER --- */
+        /* --- TEMA JAGUAR77 (Official Palette) --- */
         :root {
-            --primary: #ff9000;
-            --primary-dark: #ff4500;
-            --dark-glass: rgba(8, 8, 8, 0.95);
-            --border-color: rgba(255, 144, 0, 0.4);
-            --neon-green: #00ff88;
+            --primary: #ffaa00; 
+            --primary-dark: #ff7700;
+            --bg-body: #ffffff; 
+            --bg-sidebar: #363636; 
+            --text-main: #1d1d1f; 
+            --neon-green: #34c759;
+            --neon-red: #ff3b30;
+            --neon-yellow: #ffcc00;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #fff; }
+        ::-webkit-scrollbar-thumb { background: #363636; border-radius: 10px; }
 
-        body {
-            background-color: #050505;
-            font-family: 'Rajdhani', sans-serif;
-            color: white;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        body { 
+            background-color: var(--bg-body); 
+            font-family: -apple-system, BlinkMacSystemFont, 'Poppins', sans-serif;
+            color: var(--text-main); 
+            min-height: 100vh; 
+            padding-top: 60px; 
+            padding-bottom: 120px; 
             overflow-x: hidden;
-            padding: 20px;
         }
 
-        /* Video Background */
-        .video-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
-        .video-bg { width: 100%; height: 100%; object-fit: cover; }
-        .video-overlay {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at center, rgba(0,0,0,0.4) 0%, #000 100%);
-        }
-
-        .fixed-back {
-            position: absolute; top: 20px; left: 20px;
-            color: #888; text-decoration: none; font-weight: bold; font-family: 'Orbitron';
-            z-index: 100; transition: 0.3s;
-        }
-        .fixed-back:hover { color: var(--primary); }
-
-        /* --- MESIN UTAMA (WRAPPER) --- */
-        .engine-wrapper {
-            width: 100%;
-            max-width: 850px;
-            background: var(--dark-glass);
-            border: 2px solid var(--border-color);
-            border-radius: 20px;
-            box-shadow: 0 0 60px rgba(0,0,0,0.8), inset 0 0 40px rgba(255, 144, 0, 0.05);
+        /* --- 1. TOP RUNNING TEXT (ORANGE) --- */
+        .marquee-top {
+            background: linear-gradient(90deg, #ffaa00, #ffcc00);
+            border-bottom: 1px solid #e5e5e5;
+            height: 40px; 
+            display: flex; align-items: center;
             overflow: hidden;
-            backdrop-filter: blur(15px);
-            position: relative;
+            position: fixed; top: 0; left: 0; width: 100%; 
+            z-index: 5000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
-        /* HEADER */
-        .engine-header {
-            padding: 20px;
-            text-align: center;
-            border-bottom: 1px solid var(--border-color);
-            background: linear-gradient(90deg, transparent, rgba(255, 144, 0, 0.05), transparent);
+        .marquee-top-content {
+            white-space: nowrap;
+            display: inline-block;
+            animation: scrollText 80s linear infinite;
         }
-        .engine-title {
-            font-family: 'Orbitron'; font-size: 1.5rem; color: var(--primary);
-            text-shadow: 0 0 15px var(--primary); letter-spacing: 2px;
-        }
-        .live-badge {
-            font-size: 0.7rem; background: rgba(0, 255, 136, 0.1); color: var(--neon-green);
-            padding: 2px 8px; border-radius: 4px; border: 1px solid var(--neon-green);
-            margin-left: 10px; vertical-align: middle; animation: blink 2s infinite;
-        }
-        @keyframes blink { 50% { opacity: 0.5; } }
-
-        /* INPUT AREA */
-        .input-zone { padding: 30px; display: flex; flex-direction: column; gap: 20px; }
         
-        .input-row {
-            display: grid; grid-template-columns: 1fr 0.1fr 1fr; gap: 15px; align-items: end;
+        .mq-item { 
+            display: inline-block; padding-right: 60px;
+            font-family: 'Oswald', sans-serif;
+            font-size: 0.9rem; font-weight: 500;
+            letter-spacing: 0.5px; line-height: 40px;
+            color: #000; text-transform: uppercase;
+        }
+        .mq-highlight { color: #fff; font-weight: 700; text-shadow: 0 1px 2px rgba(0,0,0,0.2); }
+
+        @keyframes scrollText { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+
+        /* --- 2. SIDEBAR (#363636) --- */
+        .sidebar {
+            position: fixed;
+            top: 60px; bottom: 100px; left: 20px; width: 260px; 
+            background: var(--bg-sidebar);
+            border: none;
+            border-radius: 24px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+            z-index: 4000; 
+            display: flex; flex-direction: column;
+            overflow: hidden;
         }
 
-        .input-group label {
-            display: block; color: var(--primary); font-size: 0.8rem;
-            margin-bottom: 8px; font-family: 'Orbitron'; letter-spacing: 1px;
+        .sidebar-scroll-area {
+            flex: 1; overflow-y: auto; padding: 20px 0;
+            scrollbar-width: none; z-index: 5; position: relative;
+        }
+        .sidebar-scroll-area::-webkit-scrollbar { display: none; }
+
+        .sidebar-logo { text-align: center; margin-bottom: 10px; padding: 20px 20px 0 20px; z-index: 5; }
+        .sidebar-logo img { width: 100%; max-width: 180px; filter: drop-shadow(0 0 5px rgba(255,255,255,0.1)); }
+
+        /* Tombol Daftar */
+        .btn-daftar-big {
+            background: var(--primary); color: #000;
+            font-weight: 900; font-size: 0.9rem; text-align: center; 
+            padding: 12px 0; margin: 0 20px 10px 20px; border-radius: 14px; 
+            text-decoration: none; display: block; transition: 0.2s;
+            position: relative; z-index: 10;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .btn-daftar-big:hover { background: #fff; color: #000; transform: scale(1.02); }
+
+        /* Menu Links */
+        .sidebar a.menu-link {
+            padding: 12px 25px; text-decoration: none; font-size: 0.85rem;
+            color: #ccc; 
+            display: flex; align-items: center; gap: 15px;
+            transition: 0.2s; font-weight: 500;
+            position: relative; z-index: 2;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .sidebar a.menu-link:hover, .sidebar a.menu-link.active { 
+            color: #fff; 
+            background: rgba(255, 255, 255, 0.1); 
+            border-right: 4px solid var(--primary);
+        }
+        .sidebar i { width: 25px; text-align: center; font-size: 1.1rem; color: var(--primary); }
+
+        /* --- 3. MAIN CONTENT --- */
+        .main-content {
+            margin-left: 300px; margin-right: 20px; position: relative; z-index: 1;
         }
 
-        .big-input {
-            width: 100%; background: rgba(0,0,0,0.6);
-            border: 1px solid #444; color: white; padding: 15px;
-            font-size: 1.1rem; text-align: center; font-weight: bold;
-            border-radius: 10px; text-transform: uppercase; font-family: 'Rajdhani';
-            outline: none; transition: 0.3s;
-        }
-        .big-input:focus {
-            border-color: var(--primary); box-shadow: 0 0 20px rgba(255, 144, 0, 0.2);
-        }
-        .connector { text-align: center; color: #444; font-size: 1.5rem; padding-bottom: 10px; }
-
-        .action-btn {
-            width: 100%; padding: 18px;
-            /* Gradasi Oranye */
-            background: linear-gradient(90deg, #ff9000, #ff4500, #ff9000);
-            background-size: 200%; border: none; border-radius: 10px;
-            font-family: 'Orbitron'; font-weight: 900; font-size: 1.1rem;
-            color: black; cursor: pointer; text-transform: uppercase; letter-spacing: 2px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.5); transition: 0.3s;
-            animation: glowMove 3s infinite linear;
-        }
-        .action-btn:hover { transform: scale(1.02); box-shadow: 0 0 30px var(--primary); }
-        @keyframes glowMove { to { background-position: 200%; } }
-
-        /* --- DATA PENCARIAN TERAKHIR --- */
-        .live-stream-area {
-            border-top: 1px dashed rgba(255,255,255,0.1);
-            background: rgba(0,0,0,0.3);
-            padding: 25px 30px;
+        .page-title {
+            font-family: 'Oswald', sans-serif; font-size: 2rem; color: #333;
+            margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px;
+            border-left: 5px solid var(--primary); padding-left: 15px;
         }
 
-        .stream-title {
-            font-size: 0.75rem; color: #888; margin-bottom: 15px;
-            font-family: 'Orbitron'; letter-spacing: 1px; text-transform: uppercase;
+        /* --- FORM INPUT AREA --- */
+        .calculator-area {
+            background: #f9f9f9; padding: 20px; border-radius: 15px;
+            border: 1px solid #eee; margin-bottom: 30px;
+            display: flex; flex-direction: column; gap: 15px;
         }
 
-        /* Grid Data */
-        .chip-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-            gap: 12px;
+        .input-group { position: relative; }
+        .input-label { 
+            font-family: 'Oswald'; font-size: 0.9rem; color: #555; 
+            margin-bottom: 5px; display: block; text-transform: uppercase; 
+        }
+        
+        .search-dream-box {
+            width: 100%; padding: 15px 20px 15px 50px; border-radius: 10px;
+            border: 2px solid #e5e5e5; background: #fff; font-size: 1.1rem;
+            color: #333; outline: none; transition: 0.3s;
+        }
+        .search-dream-box:focus { border-color: var(--primary); box-shadow: 0 5px 20px rgba(255, 170, 0, 0.1); }
+        .search-icon { position: absolute; left: 15px; bottom: 15px; color: var(--primary); font-size: 1.2rem; }
+
+        /* --- LOADING ANIMATION --- */
+        #loadingArea {
+            display: none; text-align: center; padding: 30px;
+            background: #fff; border-radius: 15px; margin-bottom: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05); border: 1px solid #eee;
+        }
+        .spinner {
+            width: 50px; height: 50px; margin: 0 auto 15px auto;
+            border: 5px solid #f3f3f3; border-top: 5px solid var(--primary);
+            border-radius: 50%; animation: spin 1s linear infinite;
+        }
+        .loading-text { font-family: 'Oswald'; color: #555; letter-spacing: 1px; animation: pulse 1.5s infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes pulse { 0% { opacity: 0.5; } 50% { opacity: 1; } 100% { opacity: 0.5; } }
+
+        /* --- RESULT CARD --- */
+        #predictionResult { display: none; margin-bottom: 30px; animation: slideUp 0.5s ease-out; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .result-panel {
+            background: #fff; border-radius: 15px; overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1); border: 2px solid var(--primary);
+        }
+        .result-header {
+            background: var(--primary); color: #000; padding: 15px;
+            text-align: center; font-family: 'Oswald'; font-weight: bold; font-size: 1.2rem; letter-spacing: 1px;
+        }
+        .prediction-grid {
+            display: grid; grid-template-columns: 1fr 1fr 1fr;
+            padding: 25px; gap: 15px; text-align: center;
+        }
+        .pred-box {
+            background: #f5f5f5; border-radius: 10px; padding: 15px 5px;
+            border: 1px solid #ddd; transition: 0.3s;
+        }
+        .pred-box:hover { transform: translateY(-5px); border-color: var(--primary); background: #fff; box-shadow: 0 5px 15px rgba(255,170,0,0.2); }
+        .pred-label { font-size: 0.8rem; color: #888; margin-bottom: 5px; font-weight: bold; }
+        .pred-number { 
+            font-family: 'Orbitron'; font-size: 2rem; font-weight: 900; 
+            color: #333; letter-spacing: 2px;
+        }
+        .pred-4d { color: var(--primary-dark); font-size: 2.2rem; }
+
+        /* Sample Data Header */
+        .section-header { 
+            font-family: 'Oswald', sans-serif; font-size: 1.2rem; color: #555; 
+            margin-bottom: 15px; display: flex; align-items: center; gap: 10px;
+        }
+        .section-header::after { content:''; flex:1; height:1px; background:#e0e0e0; }
+
+        /* GRID SAMPLE DATA (Menggunakan Data Asli) */
+        .dream-grid {
+            display: grid; 
+            grid-template-columns: repeat(4, 1fr); 
+            gap: 15px;
         }
 
-        .data-chip {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 8px;
-            padding: 10px;
-            display: flex; align-items: center; gap: 10px;
-            transition: 0.3s;
+        .dream-card {
+            background: #fff; border: 1px solid #eee; border-radius: 12px;
+            padding: 15px; display: flex; flex-direction: column; align-items: center;
+            text-align: center; transition: 0.2s; position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.03);
         }
-        .data-chip:hover {
-            background: rgba(255, 144, 0, 0.05);
-            border-color: var(--primary);
-            transform: translateY(-2px);
-        }
+        .dream-card:hover { transform: translateY(-5px); border-color: var(--primary); }
 
-        .chip-icon {
-            width: 32px; height: 32px;
-            background: rgba(0,0,0,0.5); border-radius: 50%;
+        .dream-icon {
+            font-size: 1.5rem; color: #555; margin-bottom: 10px;
+            background: #f9f9f9; width: 50px; height: 50px;
             display: flex; align-items: center; justify-content: center;
-            color: var(--primary); font-size: 0.9rem;
+            border-radius: 50%; border: 1px solid #ddd;
         }
-
-        .chip-info { display: flex; flex-direction: column; }
-        .chip-name { font-size: 0.7rem; font-weight: bold; color: #aaa; text-transform: uppercase; }
-        .chip-val { font-family: 'Orbitron'; font-size: 0.95rem; color: var(--primary); font-weight: bold; letter-spacing: 1px; }
-
-
-        /* --- HASIL PANEL (HIDDEN) --- */
-        .result-zone {
-            background: rgba(15,15,15,0.98);
-            border-top: 3px solid var(--primary);
-            padding: 30px; text-align: center; position: absolute; bottom: 0; left: 0; width: 100%;
-            transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            z-index: 10;
-        }
-        .result-zone.active { transform: translateY(0); }
-
-        .res-close {
-            position: absolute; top: 15px; right: 20px; color: #666; cursor: pointer; font-size: 1.5rem;
-        }
-        .res-title { font-family: 'Orbitron'; color: white; margin-bottom: 20px; font-size: 1.1rem; }
         
-        .numbers-display { display: flex; justify-content: center; gap: 10px; }
-        .num-card {
-            background: #000; border: 1px solid #333; border-radius: 8px;
-            padding: 15px 10px; min-width: 80px; flex: 1;
+        .dream-name { font-weight: bold; font-size: 0.9rem; margin-bottom: 5px; color: #333; text-transform: uppercase; }
+        
+        /* Font Angka untuk Sample Data */
+        .dream-number { 
+            font-family: 'Oswald', sans-serif; font-size: 1.2rem; 
+            color: var(--primary-dark); font-weight: 700; letter-spacing: 1px;
         }
-        .val { font-family: 'Orbitron'; font-size: 1.8rem; font-weight: bold; color: var(--primary); }
-        .lbl { font-size: 0.65rem; color: #888; display: block; margin-bottom: 5px; }
+        .dream-extra { font-size: 0.7rem; color: #aaa; margin-top: 2px; }
 
-        @media (max-width: 600px) {
-            .input-row { grid-template-columns: 1fr; }
-            .connector { transform: rotate(90deg); padding: 5px; }
-            .chip-grid { grid-template-columns: 1fr 1fr; }
+        /* --- 4. BOTTOM BAR (ORANGE) --- */
+        .bottom-marquee {
+            position: fixed; bottom: 0; left: 0; width: 100%; height: 80px;
+            background: linear-gradient(90deg, var(--primary-dark), var(--primary)); 
+            border-top: 3px solid #fff;
+            display: flex; align-items: center; overflow: hidden;
+            z-index: 5000;
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.1);
+        }
+        .bottom-marquee-content {
+            display: flex; gap: 40px; animation: scrollImages 150s linear infinite; padding-left: 100%; 
+        }
+        .marquee-img {
+            height: 60px; width: auto; object-fit: contain;
+            border-radius: 10px; 
+            border: 2px solid #363636;
+            background: #fff; padding: 2px;
+            transition: 0.3s;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+        }
+        .marquee-img:hover { transform: scale(1.05); }
+        @keyframes scrollImages { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+
+        /* --- MOBILE RESPONSIVE --- */
+        .header-mobile { display: none; }
+
+        @media (max-width: 768px) {
+            .sidebar { left: -320px; top: 0; bottom: 0; height: 100%; width: 280px; border-radius: 0; background: #363636; }
+            .sidebar.active { left: 0; }
+            .main-content { margin-left: 0; margin-right: 0; padding: 0 15px; }
+            .marquee-top { top: 50px; border-bottom: none; }
+            .bottom-marquee { height: 60px; }
+            .marquee-img { height: 45px; }
+            
+            .header-mobile {
+                display: flex; height: 50px; background: rgba(255,255,255,0.95);
+                border-bottom: 2px solid var(--primary); justify-content: space-between; 
+                align-items: center; padding: 0 15px; position: sticky; top: 0; z-index: 5500;
+            }
+
+            .page-title { font-size: 1.5rem; }
+            .search-dream-box { font-size: 1rem; padding: 15px 15px 15px 45px; }
+            
+            /* Mobile Grid: 2 Kolom */
+            .dream-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+            .dream-number { font-size: 1.1rem; }
+            .dream-name { font-size: 0.8rem; }
+            
+            /* Prediksi Mobile Stack */
+            .prediction-grid { grid-template-columns: 1fr; gap: 10px; }
+            .pred-4d { font-size: 3rem; }
         }
     </style>
 </head>
 <body>
 
-    <div class="video-container">
-        <video autoplay muted loop playsinline class="video-bg">
-            <source src="assets/images/bg-jaguar.mp4" type="video/mp4">
-        </video>
-        <div class="video-overlay"></div>
+    <div class="header-mobile">
+        <div style="font-size:1.2rem; color:#333;" onclick="toggleSidebar()"><i class="fas fa-bars"></i></div>
+        <img src="assets/images/logo-jaguar.png" style="height:22px;">
+        <a href="index.html" style="color:#333; font-size: 1.1rem;"><i class="fas fa-home"></i></a>
     </div>
 
-    <a href="index.html" class="fixed-back"><i class="fas fa-arrow-left"></i> KEMBALI MENU</a>
-
-    <div class="engine-wrapper">
-        
-        <div class="engine-header">
-            <div class="engine-title">MESIN JAGUAR <span class="live-badge">AKTIF</span></div>
+    <div id="mySidebar" class="sidebar">
+        <div class="sidebar-logo">
+            <img src="assets/images/logo-jaguar.png" alt="JAGUAR77">
         </div>
-
-        <div class="input-zone">
-            <div class="input-row">
-                <div class="input-group">
-                    <label><i class="fas fa-brain"></i> MIMPI / KEJADIAN ALAM</label>
-                    <input type="text" id="inputMimpi" class="big-input" placeholder="CONTOH: ULAR" autocomplete="off">
-                </div>
-                <div class="connector"><i class="fas fa-plus"></i></div>
-                <div class="input-group">
-                    <label><i class="fas fa-user"></i> NAMA ANDA</label>
-                    <input type="text" id="inputNama" class="big-input" placeholder="CONTOH: BUDI" autocomplete="off">
-                </div>
-            </div>
-            
-            <button class="action-btn" onclick="prosesHitung()">
-                <i class="fas fa-bolt"></i> HITUNG ANGKA HOKI
-            </button>
+        <a href="#" class="btn-daftar-big"><i class="fas fa-user-plus"></i> DAFTAR</a>
+        <div class="sidebar-scroll-area">
+            <a href="#" class="menu-link"><i class="fas fa-sign-in-alt"></i> LOGIN</a>
+            <a href="index.html" class="menu-link active"><i class="fas fa-home"></i> HOME UTAMA</a>
+            <a href="rtp-dashboard.html" class="menu-link"><i class="fas fa-chart-line"></i> RTP SLOT GACOR</a>
+            <a href="buku-mimpi.html" class="menu-link active"><i class="fas fa-book"></i> BUKU MIMPI</a>
+            <a href="#" class="menu-link"><i class="fas fa-futbol"></i> JADWAL BOLA</a>
+            <a href="#" class="menu-link"><i class="fas fa-dice"></i> LIVE CASINO</a>
+            <a href="#" class="menu-link"><i class="fas fa-headset"></i> LIVE CHAT</a>
         </div>
-
-        <div class="live-stream-area">
-            <div class="stream-title"><i class="fas fa-satellite-dish"></i> PENCARIAN TERAKHIR MEMBER</div>
-            
-            <div class="chip-grid">
-                <div class="data-chip"><div class="chip-icon"><i class="fas fa-dragon"></i></div><div class="chip-info"><div class="chip-name">NAGA</div><div class="chip-val">8219</div></div></div>
-                <div class="data-chip"><div class="chip-icon"><i class="fas fa-fire"></i></div><div class="chip-info"><div class="chip-name">API</div><div class="chip-val">4511</div></div></div>
-                <div class="data-chip"><div class="chip-icon"><i class="fas fa-money-bill-wave"></i></div><div class="chip-info"><div class="chip-name">UANG</div><div class="chip-val">2981</div></div></div>
-                <div class="data-chip"><div class="chip-icon"><i class="fas fa-shield-alt"></i></div><div class="chip-info"><div class="chip-name">POLISI</div><div class="chip-val">8821</div></div></div>
-            </div>
-        </div>
-
-        <div id="resultZone" class="result-zone">
-            <i class="fas fa-times res-close" onclick="tutupResult()"></i>
-            <div class="res-title">HASIL PREDIKSI UNTUK: <span id="resName" style="color:var(--primary)">---</span></div>
-            
-            <div class="numbers-display">
-                <div class="num-card"><span class="lbl">2D BELAKANG</span><div class="val" id="out2D">00</div></div>
-                <div class="num-card"><span class="lbl">3D TENGAH</span><div class="val" id="out3D">000</div></div>
-                <div class="num-card" style="border:1px solid var(--primary)"><span class="lbl" style="color:var(--primary)">4D LENGKAP</span><div class="val" id="out4D">0000</div></div>
-            </div>
-            <div style="margin-top:20px; font-size:0.7rem; color:#444;">DATA BERHASIL DIOLAH DARI DATABASE JAGUAR</div>
-        </div>
-
     </div>
 
+    <div id="overlay" onclick="toggleSidebar()" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.3); z-index:5800; display:none; backdrop-filter:blur(2px);"></div>
+
+    <div class="marquee-top">
+        <div class="marquee-top-content" id="marqueeText"></div>
+    </div>
+
+    <div class="main-content">
+        <h1 class="page-title">Mesin Prediksi Mimpi & Nama</h1>
+
+        <div class="calculator-area">
+            <div class="input-group">
+                <span class="input-label">Masukkan Nama Anda:</span>
+                <i class="fas fa-user search-icon"></i>
+                <input type="text" id="inputNama" class="search-dream-box" placeholder="Contoh: Budi Santoso" autocomplete="off">
+            </div>
+            
+            <div class="input-group">
+                <span class="input-label">Apa Mimpi / Kode Alam Anda?</span>
+                <i class="fas fa-cloud-moon search-icon"></i>
+                <input type="text" id="inputMimpi" class="search-dream-box" placeholder="Contoh: Dikejar Ular Besar" autocomplete="off">
+            </div>
+        </div>
+
+        <div id="loadingArea">
+            <div class="spinner"></div>
+            <div class="loading-text">SEDANG MENGANALISA SEMESTA...</div>
+        </div>
+
+        <div id="predictionResult">
+            <div class="result-panel">
+                <div class="result-header">HASIL ANALISA PREDIKSI</div>
+                
+                <div class="prediction-grid">
+                    <div class="pred-box">
+                        <div class="pred-label">ANGKA 4D (UTAMA)</div>
+                        <div id="res4D" class="pred-number pred-4d">0000</div>
+                    </div>
+                    <div class="pred-box">
+                        <div class="pred-label">ANGKA 3D (EKOR)</div>
+                        <div id="res3D" class="pred-number">000</div>
+                    </div>
+                    <div class="pred-box">
+                        <div class="pred-label">ANGKA 2D (EKOR)</div>
+                        <div id="res2D" class="pred-number">00</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-header">
+            <i class="fas fa-history"></i> Data Mimpi Populer (Acak)
+        </div>
+        <div id="dreamGrid" class="dream-grid"></div>
+    </div>
+
+    <div class="bottom-marquee">
+        <div class="bottom-marquee-content" id="imgMarquee"></div>
+    </div>
+
+    <script src="assets/js/data-mimpi.js"></script>
     <script>
-        const inpMimpi = document.getElementById('inputMimpi');
-        const inpNama = document.getElementById('inputNama');
-        const resultZone = document.getElementById('resultZone');
-        const resName = document.getElementById('resName');
-        const out2D = document.getElementById('out2D');
-        const out3D = document.getElementById('out3D');
-        const out4D = document.getElementById('out4D');
+        const textData = ["INFO TERKINI: BUKU MIMPI LENGKAP - KETIK NAMA & MIMPI ANDA UNTUK HASIL AKURAT!", "UPDATE PREDIKSI SETIAP HARI!"];
+        const promoImages = [];
+        for(let i=1; i<=13; i++) { promoImages.push(`PROMOJAG${i}.png`); }
 
-        function prosesHitung() {
-            const mimpi = inpMimpi.value.trim().toUpperCase();
-            const nama = inpNama.value.trim().toUpperCase();
+        function initPage() {
+            // Load Marquee
+            const txtC = document.getElementById('marqueeText');
+            let txtH = ""; textData.forEach(t => txtH += `<span class="mq-item">${t}</span>`);
+            txtC.innerHTML = txtH.repeat(10);
 
-            if(mimpi.length < 2) { alert("Tulis mimpi minimal 2 huruf bosku!"); return; }
+            // Load Promo
+            const imgC = document.getElementById('imgMarquee');
+            let imgH = ""; promoImages.forEach(i => imgH += `<img src="assets/images/${i}" class="marquee-img">`);
+            imgC.innerHTML = imgH.repeat(6);
 
-            // Rumus Energi (A=1 ... Z=26)
-            const combined = (mimpi + nama).replace(/[^A-Z]/g, '');
-            let totalEnergy = 0;
-            for(let i=0; i<combined.length; i++) totalEnergy += (combined.charCodeAt(i) - 64);
-
-            // Rumus Kepala & Ekor
-            let head = (combined.charCodeAt(0) * combined.length) + 10;
-            if(head > 99) head = head % 90 + 10;
-
-            let tail = totalEnergy;
-            while(tail > 99) tail = Math.floor(tail / 1.5);
-            if(tail < 10) tail += 10;
-
-            const final4D = `${Math.floor(head)}${Math.floor(tail)}`;
-
-            // Tampilkan
-            resName.innerText = nama || 'TAMU';
-            out4D.innerText = final4D;
-            out3D.innerText = final4D.substring(1);
-            out2D.innerText = final4D.substring(2);
-
-            resultZone.classList.add('active');
+            // RENDER DATA MIMPI DARI FILE EXTERNAL (data-mimpi.js)
+            // Kita acak agar setiap refresh tampil beda
+            if (typeof databaseMimpi !== 'undefined') {
+                const shuffled = databaseMimpi.sort(() => 0.5 - Math.random());
+                const selected = shuffled.slice(0, 24); // Ambil 24 item
+                renderDreams(selected);
+            } else {
+                console.error("Database mimpi tidak ditemukan! Pastikan assets/js/data-mimpi.js ada.");
+            }
         }
 
-        function tutupResult() {
-            resultZone.classList.remove('active');
+        /* --- LOGIC PREDIKSI --- */
+        const inputNama = document.getElementById('inputNama');
+        const inputMimpi = document.getElementById('inputMimpi');
+        const loadingArea = document.getElementById('loadingArea');
+        const predictionResult = document.getElementById('predictionResult');
+        
+        const res4D = document.getElementById('res4D');
+        const res3D = document.getElementById('res3D');
+        const res2D = document.getElementById('res2D');
+
+        let typingTimer; 
+        const doneTypingInterval = 800; 
+
+        function calculateWordValue(text) {
+            let sum = 0;
+            const cleanText = text.toUpperCase().replace(/[^A-Z]/g, '');
+            for (let i = 0; i < cleanText.length; i++) {
+                sum += (cleanText.charCodeAt(i) - 64);
+            }
+            return sum;
         }
 
-        // Tombol Enter
-        inpMimpi.addEventListener('keypress', (e) => { if(e.key === 'Enter') prosesHitung() });
-        inpNama.addEventListener('keypress', (e) => { if(e.key === 'Enter') prosesHitung() });
+        function startCalculation() {
+            predictionResult.style.display = 'none';
+            loadingArea.style.display = 'block';
+            clearTimeout(typingTimer);
+            typingTimer = setTimeout(processResult, doneTypingInterval);
+        }
+
+        function processResult() {
+            const nama = inputNama.value.trim();
+            const mimpi = inputMimpi.value.trim();
+
+            if (nama.length === 0 && mimpi.length === 0) {
+                loadingArea.style.display = 'none';
+                return;
+            }
+
+            let totalScore = 0;
+            if (nama.length > 0) totalScore += calculateWordValue(nama);
+            if (mimpi.length > 0) {
+                const words = mimpi.split(/\s+/);
+                words.forEach(word => totalScore += calculateWordValue(word));
+            }
+
+            let inputLength = (nama.length + mimpi.length) || 1; 
+            let seed = (totalScore * inputLength * 77) + 1234; 
+            let masterNumber = seed % 10000;
+
+            let str4D = masterNumber.toString().padStart(4, '0');
+            let str3D = str4D.substring(1);
+            let str2D = str4D.substring(2);
+
+            res4D.innerText = str4D;
+            res3D.innerText = str3D;
+            res2D.innerText = str2D;
+
+            loadingArea.style.display = 'none';
+            predictionResult.style.display = 'block';
+        }
+
+        inputNama.addEventListener('keyup', startCalculation);
+        inputMimpi.addEventListener('keyup', startCalculation);
+
+        function renderDreams(data) {
+            const container = document.getElementById('dreamGrid');
+            container.innerHTML = '';
+            data.forEach(item => {
+                // Ambil data dari object di data-mimpi.js (nama, d4, d3, d2)
+                // Jika tidak ada d4 (misal data lama), pakai logic fallback
+                let displayNum = item.d4 || item.angka || "????";
+                
+                container.innerHTML += `
+                    <div class="dream-card">
+                        <div class="dream-icon"><i class="fas fa-book"></i></div>
+                        <div class="dream-name">${item.nama}</div>
+                        <div class="dream-number">${displayNum}</div>
+                        <div class="dream-extra">2D: ${item.d2 || ".."} | 3D: ${item.d3 || "..."}</div>
+                    </div>
+                `;
+            });
+        }
+
+        function toggleSidebar() {
+            const sb = document.getElementById("mySidebar");
+            const overlay = document.getElementById("overlay");
+            if (sb.classList.contains('active')) {
+                sb.classList.remove('active'); overlay.style.display = 'none';
+            } else {
+                sb.classList.add('active'); overlay.style.display = 'block';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', initPage);
     </script>
 </body>
 </html>
